@@ -35,19 +35,16 @@ nameForm.addEventListener('submit', (e) => {
 });
 
 teamOneAddButton.addEventListener('click', () => {
-    // increment the current state for team one's score
     currentGame.score1++;
     displayCurrentGameEl();
 });
 
 teamTwoAddButton.addEventListener('click', () => {
-    // increment the current state for team two's score
     currentGame.score2++;
     displayCurrentGameEl();
 });
 
 teamOneSubtractButton.addEventListener('click', () => {
-    // decrement the current state for team one's score
     if (currentGame.score1 > 0) {
         currentGame.score1--;
     }
@@ -55,7 +52,6 @@ teamOneSubtractButton.addEventListener('click', () => {
 });
 
 teamTwoSubtractButton.addEventListener('click', () => {
-    // decrement the current state for team two's score
     if (currentGame.score2 > 0) {
         currentGame.score2--;
     }
@@ -64,7 +60,9 @@ teamTwoSubtractButton.addEventListener('click', () => {
 
 finishGameButton.addEventListener('click', async () => {
     // create a new game using the current game state
+    // pastGamesEl.textContent = ''; 
 
+    await createGame(currentGame);
     // after creating this new game, re-fetch the games to get the updated state and display them (hint: call displayAllGames())
 
     currentGame.name1 = '';
@@ -73,11 +71,13 @@ finishGameButton.addEventListener('click', async () => {
     currentGame.score2 = 0;
 
     displayCurrentGameEl();
+    await displayAllGames();
 });
 
 // on load . . .
-window.addEventListener('', async () => {
+window.addEventListener('load', async () => {
     // display all past games (hint: call displayAllGames())
+    await displayAllGames();
 });
 
 function displayCurrentGameEl() {
@@ -92,9 +92,17 @@ function displayCurrentGameEl() {
     currentGameEl.append(currentGameData);
 }
 
-function displayAllGames() {
+async function displayAllGames() {
     // clear out the past games list in the DOM
+    pastGamesEl.textContent = '';
     // FETCH ALL GAMES from supabase
+
+    const allGames = await getGames();
+    console.log(allGames);
+    for (let game of allGames) {
+        const pastGames = renderGame(game);
+        pastGamesEl.append(pastGames);
+    }
     // loop through the past games
     // render and append a past game for each past game in state
     // 

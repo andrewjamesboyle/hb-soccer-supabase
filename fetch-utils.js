@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://gxwgjhfyrlwiqakdeamc.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzNjQxMTMxMiwiZXhwIjoxOTUxOTg3MzEyfQ.PHekiwfLxT73qQsLklp0QFEfNx9NlmkssJFDnlvNIcA';
+const SUPABASE_URL = 'https://qydsigowszhtfxgqasyn.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5ZHNpZ293c3podGZ4Z3Fhc3luIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjAwMDEyMzIsImV4cCI6MTk3NTU3NzIzMn0.NkXzWeFd8EUOb7YsydiXALdYvDucbOZacLx_gg-KPZ8';
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -29,40 +29,40 @@ export async function getGames() {
     return checkError(response);    
 }
 
-export async function getUser() {
-    return client.auth.session();
-}
+// export async function getUser() {
+//     return client.auth.session();
+// }
 
 
-export async function checkAuth() {
-    const user = await getUser();
+// export async function checkAuth() {
+//     const user = await getUser();
 
-    if (!user) location.replace('../'); 
-}
+//     if (!user) location.replace('../'); 
+// }
 
-export async function redirectToGames() {
-    if (await getUser()) {
-        location.replace('./games');
-    }
-}
+// export async function redirectToGames() {
+//     if (await getUser()) {
+//         location.replace('./games');
+//     }
+// }
 
-export async function signupUser(email, password){
-    const response = await client.auth.signUp({ email, password });
+// export async function signupUser(email, password){
+//     const response = await client.auth.signUp({ email, password });
     
-    return response.user;
-}
+//     return response.user;
+// }
 
-export async function signInUser(email, password){
-    const response = await client.auth.signIn({ email, password });
+// export async function signInUser(email, password){
+//     const response = await client.auth.signIn({ email, password });
 
-    return response.user;
-}
+//     return response.user;
+// }
 
-export async function logout() {
-    await client.auth.signOut();
+// export async function logout() {
+//     await client.auth.signOut();
 
-    return window.location.href = '../';
-}
+//     return window.location.href = '../';
+// }
 
 function checkError({ data, error }) {
     return error ? console.error(error) : data;
